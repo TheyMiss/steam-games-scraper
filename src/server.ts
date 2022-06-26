@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import 'dotenv/config';
-import log from '.';
+import log from './logger';
 
 const app = express();
 
