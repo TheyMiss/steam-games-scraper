@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
-import 'dotenv/config';
+import config from './config/default';
+import connectToDb from './db/conn';
 import log from './logger';
 
 const app = express();
@@ -18,5 +19,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, () => {
-  log.info(`Server is listening at ${PORT}`);
+  log.info(`Server is listening at ${config.port}`);
+  connectToDb();
 });
