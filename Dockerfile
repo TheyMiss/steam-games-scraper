@@ -6,5 +6,5 @@ COPY package*.json ./
 RUN npm install
 USER admin
 COPY . .
-EXPOSE 3003
+EXPOSE 3002
 CMD ["npm", "run","dev"]

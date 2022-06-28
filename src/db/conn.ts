@@ -2,7 +2,7 @@ import config from '../config/default';
 import mongoose from 'mongoose';
 
 const connectToDb = async () => {
-  const dbUri = config.mongodb_uri;
+  const dbUri = config.mongodb_uri || 'mongodb://localhost/steam-games';
   try {
     await mongoose.connect(dbUri);
   } catch (error) {
