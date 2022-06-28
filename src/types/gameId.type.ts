@@ -1,4 +1,4 @@
-export interface GameId {
+export interface IGameId {
   appid: number;
   name: string;
 }

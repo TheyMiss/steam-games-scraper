@@ -2,7 +2,7 @@ import GameIdModel, { GameId } from '../model/gameId.model';
 import { gameIdSchema } from '../schema/gameId.schema';
 import { getAllSteamGameIds } from '../scraper/getAllSteamGameIds';
 
-export const gameIdInsertion = async () => {
+export const gameIdInsertion = async (): Promise<void> => {
   try {
     const gameIdArr: GameId[] = await getAllSteamGameIds();
 

@@ -10,8 +10,7 @@
     "@typescript-eslint/no-this-alias": [
       "error",
       {
-        "allowDestructuring": false, // Disallow `const { props, state } = this`; true by default
-        "allowedNames": ["socket"] // Allow `const self = this`; `[]` by default
+        "allowDestructuring": false // Disallow `const { props, state } = this`; true by default
       }
     ]
   }
