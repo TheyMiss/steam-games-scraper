@@ -1,12 +1,13 @@
 import GameIdModel, { GameId } from '../model/gameId.model';
 import { gameIdSchema } from '../schema/gameId.schema';
 import { getAllSteamGameIds } from '../scraper/getAllSteamGameIds';
+import { getSpecificSteamGameData } from '../scraper/getSteamGameData';
 
 export const gameIdInsertion = async (): Promise<void> => {
   try {
     const gameIdArr: GameId[] = await getAllSteamGameIds();
 
-    gameIdArr.slice(0, 10).forEach(async (game) => {
+    gameIdArr.slice(10000, 11000).forEach(async (game) => {
       const isValidationSuccess = gameIdSchema.safeParse({ appid: game.appid, name: game.name }).success;
 
       const gameIdExist = await GameIdModel.findOne({ appid: game.appid });
@@ -19,6 +20,8 @@ export const gameIdInsertion = async (): Promise<void> => {
         }
       }
     });
+
+    getSpecificSteamGameData();
   } catch (error) {
     console.log(error.message);
   }

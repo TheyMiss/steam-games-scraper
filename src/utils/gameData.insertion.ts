@@ -1,22 +1,15 @@
 import GameDataModel from '../model/gameData.model';
-import GameIdModel from '../model/gameId.model';
-import { getSpecificSteamGameData } from '../scraper/getSteamGameData';
+import { IGameData } from '../types/gameData.type';
 
-export const gameDataInsertion = async (): Promise<void> => {
+export const gameDataInsertion = async (gameData: IGameData): Promise<void> => {
   try {
-    const gameIds = await GameIdModel.find({});
+    const gameIdExist = await GameDataModel.findOne({ appid: gameData.appid });
 
-    const gameDatas = await getSpecificSteamGameData(gameIds);
-
-    gameDatas.forEach(async (gameData) => {
-      const gameIdExist = await GameDataModel.findOne({ appid: gameData.appid });
-
-      if (!gameIdExist) {
-        await GameDataModel.create(gameData);
-      } else {
-        await GameDataModel.findOneAndUpdate({ appid: gameData.appid }, gameData);
-      }
-    });
+    if (!gameIdExist) {
+      await GameDataModel.create(gameData);
+    } else {
+      await GameDataModel.findOneAndUpdate({ appid: gameData.appid }, gameData);
+    }
   } catch (error) {
     console.log(error.message);
   }

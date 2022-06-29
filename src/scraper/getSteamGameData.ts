@@ -1,14 +1,14 @@
 import axios from 'axios';
+import GameIdModel from '../model/gameId.model';
 import { gameDataSchema } from '../schema/gameData.schema';
-import { IGameData } from '../types/gameData.type';
-import { IGameId } from '../types/gameId.type';
+import { gameDataInsertion } from '../utils/gameData.insertion';
 import { sleep } from '../utils/sleep';
 
-export const getSpecificSteamGameData = async (gameIds: IGameId[]): Promise<IGameData[]> => {
+export const getSpecificSteamGameData = async (): Promise<void> => {
   let isSleeping = false;
-  const gameDataArr = [];
+  const gameIds = await GameIdModel.find({});
 
-  console.log('Strating scraping...');
+  console.log('Starting scraping...');
 
   for (let i = 0; i < gameIds.length; i++) {
     if (isSleeping) {
@@ -42,24 +42,20 @@ export const getSpecificSteamGameData = async (gameIds: IGameId[]): Promise<IGam
 
         const isSuccess = gameDataSchema.safeParse(gameData).success;
 
-        if (isSuccess) gameDataArr.push(gameData);
+        if (isSuccess) gameDataInsertion(gameData);
 
         console.log(i, 'Succeed');
       } else {
         console.log(i, 'Failed');
       }
     } catch (error) {
-      console.log(error);
-
       if (error?.response?.status === 403 || error?.response?.status === 429) {
         isSleeping = true;
       } else {
-        console.log(error);
+        console.log(error.message);
       }
     }
   }
 
   console.log('Done scraping...');
-
-  return gameDataArr;
 };
