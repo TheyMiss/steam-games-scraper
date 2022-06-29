@@ -8,15 +8,13 @@ import { getSpecificSteamGameData } from './scraper/getSteamGameData';
 
 const app = express();
 
-const PORT = process.env.PORT;
-
 //scrapes At 00:00 on day-of-month 1.
 schedule.scheduleJob('0 0 1 * *', async function () {
   await gameIdInsertion();
   await getSpecificSteamGameData();
 });
 
-app.listen(PORT, () => {
+app.listen(config.port, () => {
   log.info(`Server is listening at ${config.port}`);
   connectToDb();
 });
