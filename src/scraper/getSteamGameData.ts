@@ -1,5 +1,4 @@
 import axios from 'axios';
-import disconnectFromDb from '../db/discoonn';
 import GameIdModel from '../model/gameId.model';
 import { gameDataSchema } from '../schema/gameData.schema';
 import { gameDataInsertion } from '../utils/gameData.insertion';
@@ -59,5 +58,4 @@ export const getSpecificSteamGameData = async (): Promise<void> => {
   }
 
   console.log('Done scraping...');
-  disconnectFromDb();
 };

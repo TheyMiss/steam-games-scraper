@@ -1,7 +1,6 @@
 import GameIdModel, { GameId } from '../model/gameId.model';
 import { gameIdSchema } from '../schema/gameId.schema';
 import { getAllSteamGameIds } from '../scraper/getAllSteamGameIds';
-import { getSpecificSteamGameData } from '../scraper/getSteamGameData';
 
 export const gameIdInsertion = async (): Promise<void> => {
   try {
@@ -20,10 +19,6 @@ export const gameIdInsertion = async (): Promise<void> => {
         }
       }
     }
-
-    console.log('Got all games ids and saved them');
-
-    getSpecificSteamGameData();
   } catch (error) {
     console.log(error.message);
   }

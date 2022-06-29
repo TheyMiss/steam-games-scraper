@@ -1,9 +1,13 @@
 import { gameIdInsertion } from './gameId.insertion';
 import connectToDb from '../db/conn';
+import disconnectFromDb from '../db/discoonn';
+import { getSpecificSteamGameData } from '../scraper/getSteamGameData';
 
-const scrapeNow = (): void => {
+const scrapeNow = async (): Promise<void> => {
   connectToDb();
-  gameIdInsertion();
+  await gameIdInsertion();
+  await getSpecificSteamGameData();
+  disconnectFromDb();
 };
 
 scrapeNow();
