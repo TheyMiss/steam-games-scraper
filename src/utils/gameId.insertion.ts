@@ -7,7 +7,7 @@ export const gameIdInsertion = async (): Promise<void> => {
   try {
     const gameIdArr: GameId[] = await getAllSteamGameIds();
 
-    gameIdArr.slice(10000, 11000).forEach(async (game) => {
+    for (const game of gameIdArr) {
       const isValidationSuccess = gameIdSchema.safeParse({ appid: game.appid, name: game.name }).success;
 
       const gameIdExist = await GameIdModel.findOne({ appid: game.appid });
@@ -19,7 +19,9 @@ export const gameIdInsertion = async (): Promise<void> => {
           await GameIdModel.findOneAndUpdate({ appid: game.appid }, { appid: game.appid, name: game.name });
         }
       }
-    });
+    }
+
+    console.log('Got all games ids and saved them');
 
     getSpecificSteamGameData();
   } catch (error) {

@@ -4,8 +4,6 @@ services:
     build: ./
     ports:
       - 3002:3002
-    environment:
-      MONGODB_URI: mongodb://db/steam-games
   db:
     image: mongo:4.0.28-xenial
     ports:

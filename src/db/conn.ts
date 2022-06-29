@@ -1,8 +1,8 @@
 import config from '../config/default';
 import mongoose from 'mongoose';
 
-const connectToDb = async () => {
-  const dbUri = config.mongodb_uri || 'mongodb://localhost/steam-games';
+const connectToDb = async (): Promise<void> => {
+  const dbUri = config.mongodb_uri;
   try {
     await mongoose.connect(dbUri);
   } catch (error) {
